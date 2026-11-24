@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuranQuest Live</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="conn" class="conn hidden">Connection lost. Reconnecting...</div>
+
+    <div class="container">
+        <header>
+            <h1>🎯 QuranQuest Live</h1>
+            <p id="tagline">Test Your Quran Knowledge in Real-Time</p>
+        </header>
+
+        <!-- LOBBY -->
+        <div id="lobby" class="screen active">
+            <div id="joinBox">
+                <h2 class="center">Join the Quiz</h2>
+                <form id="joinForm" class="join-form" autocomplete="off">
+                    <input type="text" id="username" placeholder="Enter your name" maxlength="20" required>
+                    <button id="joinBtn" type="submit">Join Quiz</button>
+                </form>
+                <p id="joinError" class="error" role="alert"></p>
+            </div>
+
+            <div id="waitBox" class="waiting-message hidden">
+                <div class="waiting-content">
+                    <div class="spinner"></div>
+                    <h3>Waiting for Quiz to Start...</h3>
+                    <p id="waitMsg">Please wait while the host starts the quiz. Questions will appear here when it begins.</p>
+                    <div class="waiting-info">
+                        <p>✅ You joined as <strong id="waitName"></strong></p>
+                        <p>👥 Participants: <span id="participantCount">0</span></p>
+                        <p id="waitInfo"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-info">
+                <h3>Quiz Information:</h3>
+                <ul>
+                    <li>📝 <strong id="infoCount">50 Questions</strong> about the Holy Quran</li>
+                    <li>⏱️ <strong id="infoSecs">15 seconds</strong> per question</li>
+                    <li>🏆 <strong>Real-time scoring</strong> based on accuracy and speed</li>
+                    <li>📊 <strong>Live leaderboard</strong> showing all participants</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- QUIZ -->
+        <div id="quiz" class="screen">
+            <div class="quiz-header">
+                <div class="question-info">Question <span id="currentQ">1</span>/<span id="totalQ">50</span></div>
+                <div class="timer-container">
+                    <div class="timer" id="timer">--</div>
+                    <div class="timer-label">seconds left</div>
+                </div>
+                <div class="score">Your Score: <span id="currentScore">0</span></div>
+            </div>
+
+            <div class="question-container">
+                <h2 id="questionText"></h2>
+                <div class="options" id="options">
+                    <button type="button" class="option" data-i="0"></button>
+                    <button type="button" class="option" data-i="1"></button>
+                    <button type="button" class="option" data-i="2"></button>
+                    <button type="button" class="option" data-i="3"></button>
+                </div>
+                <p id="status" class="status-line"></p>
+                <div id="feedback" class="feedback hidden"></div>
+                <div id="explain" class="explain hidden"></div>
+            </div>
+
+            <div class="performance-section">
+                <div class="leaderboard">
+                    <h3>🏆 Live Leaderboard</h3>
+                    <div class="leaderboard-header">
+                        <span>Rank</span><span>Name</span><span>Score</span><span>Correct</span>
+                    </div>
+                    <div id="leaderboardList" class="leaderboard-list"></div>
+                </div>
+
+                <div class="current-performance">
+                    <h3>📈 Your Performance</h3>
+                    <div class="performance-stats">
+                        <div class="stat"><span class="stat-value" id="correctCount">0</span><span class="stat-label">Correct</span></div>
+                        <div class="stat"><span class="stat-value" id="incorrectCount">0</span><span class="stat-label">Incorrect</span></div>
+                        <div class="stat"><span class="stat-value" id="accuracy">0%</span><span class="stat-label">Accuracy</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULTS -->
+        <div id="results" class="screen">
+            <h2 class="center" id="resultsTitle">🎉 Quiz Finished! Final Results</h2>
+            <p class="center" id="myResult"></p>
+
+            <div class="final-leaderboard">
+                <h3 class="center">🏆 Final Ranking</h3>
+                <div class="leaderboard-header">
+                    <span>Rank</span><span>Name</span><span>Score</span><span>Correct</span><span>Accuracy</span>
+                </div>
+                <div id="finalLeaderboard" class="leaderboard-list"></div>
+            </div>
+
+            <div class="questions-review">
+                <h3 class="center">📋 Questions Review</h3>
+                <div id="questionsReview" class="review-list"></div>
+            </div>
+
+            <div class="action-buttons">
+                <button type="button" id="shareBtn">Share Results</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="pausedOverlay" class="overlay hidden">
+        <div><h2>Paused</h2><p>The host has paused the quiz. Please wait.</p></div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="common.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

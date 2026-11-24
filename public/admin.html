@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>QuranQuest Live - Host</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 QuranQuest Live</h1>
+            <p id="tagline">Host Dashboard</p>
+        </header>
+
+        <!-- LOGIN -->
+        <div id="login" class="screen active">
+            <form id="loginForm" class="login-box" autocomplete="off">
+                <h2 class="center login-title">Host Sign In</h2>
+                <input id="password" type="password" placeholder="Host password" aria-label="Host password" required>
+                <button type="submit">Sign in</button>
+                <p id="loginError" class="error" role="alert"></p>
+            </form>
+        </div>
+
+        <!-- DASHBOARD -->
+        <div id="dash" class="hidden">
+            <div class="admin-panel" id="panel">
+                <div class="seg" id="modeSeg">
+                    <button type="button" data-mode="practice">Practice (20)</button>
+                    <button type="button" data-mode="competition">Competition (50)</button>
+                </div>
+                <button type="button" id="primaryBtn">Start</button>
+                <button type="button" id="pauseBtn" class="secondary hidden">Pause</button>
+                <label><input type="checkbox" id="autoChk"> Auto-advance</label>
+                <label><input type="checkbox" id="lockChk"> Lock joining</label>
+                <button type="button" id="bigBtn" class="secondary">Big screen</button>
+                <button type="button" id="exportBtn" class="secondary">Export CSV</button>
+                <button type="button" id="resetBtn" class="danger">Reset</button>
+                <button type="button" id="logoutBtn" class="secondary">Sign out</button>
+            </div>
+            <details class="players">
+                <summary>Players (<span id="pCount">0</span>)</summary>
+                <div id="plist"></div>
+                <p class="clear-row"><button type="button" id="clearBtn" class="small-danger">Remove all players</button></p>
+            </details>
+
+            <!-- LOBBY -->
+            <div id="lobby" class="screen">
+                <div class="join-banner">
+                    Players join at
+                    <strong id="joinUrl"></strong>
+                </div>
+                <div class="participants">Participants: <span class="counter" id="participantCount">0</span></div>
+                <div id="chips" class="chips"></div>
+            </div>
+
+            <!-- QUIZ -->
+            <div id="quiz" class="screen">
+                <div id="pausedBanner" class="paused-banner hidden">PAUSED</div>
+                <div class="quiz-header">
+                    <div class="question-info">Question <span id="currentQ">1</span>/<span id="totalQ">50</span></div>
+                    <div class="timer-container">
+                        <div class="timer" id="timer">--</div>
+                        <div class="timer-label">seconds left</div>
+                    </div>
+                    <div class="score">Answered: <span id="answered">0</span> / <span id="playerTotal">0</span></div>
+                </div>
+
+                <div class="question-container">
+                    <h2 id="questionText"></h2>
+                    <div class="options">
+                        <div class="option static" data-i="0"><span class="opt-text"></span><span class="opt-count"></span></div>
+                        <div class="option static" data-i="1"><span class="opt-text"></span><span class="opt-count"></span></div>
+                        <div class="option static" data-i="2"><span class="opt-text"></span><span class="opt-count"></span></div>
+                        <div class="option static" data-i="3"><span class="opt-text"></span><span class="opt-count"></span></div>
+                    </div>
+                    <div id="revealInfo" class="feedback none hidden"></div>
+                    <div id="explain" class="explain hidden"></div>
+                </div>
+
+                <div class="performance-section">
+                    <div class="leaderboard">
+                        <h3>🏆 Live Leaderboard</h3>
+                        <div class="leaderboard-header">
+                            <span>Rank</span><span>Name</span><span>Score</span><span>Correct</span>
+                        </div>
+                        <div id="leaderboardList" class="leaderboard-list"></div>
+                    </div>
+                    <div class="current-performance">
+                        <h3>📈 This Question</h3>
+                        <div class="performance-stats">
+                            <div class="stat"><span class="stat-value" id="statAnswered">0</span><span class="stat-label">Answered</span></div>
+                            <div class="stat"><span class="stat-value" id="statCorrect">-</span><span class="stat-label">Got it right</span></div>
+                            <div class="stat"><span class="stat-value" id="statOnline">0</span><span class="stat-label">Players online</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESULTS -->
+            <div id="results" class="screen">
+                <h2 class="center" id="resultsTitle">🎉 Quiz Finished! Final Results</h2>
+                <div class="final-leaderboard">
+                    <h3 class="center">🏆 Final Ranking</h3>
+                    <div class="leaderboard-header">
+                        <span>Rank</span><span>Name</span><span>Score</span><span>Correct</span><span>Accuracy</span>
+                    </div>
+                    <div id="finalLeaderboard" class="leaderboard-list"></div>
+                </div>
+                <p class="center muted-note">Use <strong>Export CSV</strong> to save everyone's answers, then <strong>Reset</strong> for a new round.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="common.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

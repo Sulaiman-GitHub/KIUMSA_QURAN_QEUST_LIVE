@@ -1,0 +1,22 @@
+{
+  "name": "quran-quiz-app",
+  "version": "2.0.0",
+  "description": "Real-time Quran quiz for live events: host dashboard, practice round and competition",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test/smoke.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.18.0",
+    "socket.io": "^4.7.0"
+  },
+  "devDependencies": {
+    "socket.io-client": "^4.7.0"
+  },
+  "keywords": ["quiz", "quran", "real-time"],
+  "license": "MIT"
+}
