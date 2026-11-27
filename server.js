@@ -176,7 +176,8 @@ function buildState(rows) {
     },
     question: q ? { text: q.text, options: q.options, category: q.category } : null,
     reveal: game.phase === 'reveal' ? buildReveal(q, list) : null,
-    leaderboard: rows.slice(0, 10).map((r) => ({
+    names: game.phase === 'lobby' ? rows.slice(0, 80).map((r) => r.p.name) : undefined,
+    leaderboard: rows.slice(0, 30).map((r) => ({
       rank: r.rank,
       name: r.p.name,
       score: r.score,

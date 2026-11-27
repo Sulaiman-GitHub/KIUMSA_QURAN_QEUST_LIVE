@@ -129,6 +129,17 @@
         ])
       );
     });
+    // Outside the shown rows? Still show this player's own line at the bottom.
+    if (me && !state.leaderboard.some((r) => r.name === me.name)) {
+      list.appendChild(
+        h('div', 'leaderboard-item you', null, [
+          h('span', 'leaderboard-rank', me.rank),
+          h('span', 'leaderboard-name', me.name),
+          h('span', 'leaderboard-score', me.score),
+          h('span', 'leaderboard-correct', me.correct + '/' + state.total),
+        ])
+      );
+    }
   }
 
   function renderPerformance() {
@@ -256,6 +267,9 @@
       $('#waitMsg').textContent = state.isPractice
         ? 'Practice round: no pressure, scores do not count. Waiting for the host to start.'
         : 'Please wait while the host starts the quiz. Questions will appear here when it begins.';
+      const chips = $('#lobbyNames');
+      chips.replaceChildren();
+      (state.names || []).forEach((n) => chips.appendChild(h('span', 'chip', n)));
       $('#waitInfo').textContent = '⏱️ Get ready: ' + state.total + ' questions × ' + Math.round(state.limitMs / 1000) + ' seconds';
       return;
     }
